@@ -58,6 +58,7 @@
     .section-head h2{font-size:clamp(1.7rem,3.6vw,2.6rem);font-weight:800;letter-spacing:-.01em;line-height:1.05;margin:0}
     .section-head p{margin:0;color:var(--paper-muted);max-width:45ch;font-size:.9rem;line-height:1.5}
     .act-label{font-weight:800;font-size:.8rem;letter-spacing:.1em;text-transform:uppercase;color:var(--paper-muted);margin-bottom:10px}
+    .act-group{margin-bottom:16px}
     .act-pills{display:flex;flex-wrap:wrap;gap:8px}
     .act-pill{border:1.5px solid rgba(20,30,25,.16);background:#fff;border-radius:999px;padding:9px 14px;font-weight:700;font-size:.85rem;cursor:pointer;color:var(--paper-ink)}
     .act-pill:hover{border-color:var(--green)}
@@ -207,9 +208,10 @@
     </section>
 
     <section class="paper planner" id="plannerSection">
-      <div class="section-head"><h2>Planifica tu actividad</h2><p>Elige una labor y mira en verde los días favorables de esta semana y de este mes, según la tradición lunar. Toca un día para ver su guía completa.</p></div>
-      <div class="act-label">Actividades:</div>
-      <div class="act-pills" id="actPills"></div>
+      <div class="section-head"><h2>Planifica tu actividad</h2><p>Elige una actividad y mira en verde los días favorables de esta semana y de este mes, según la tradición lunar. Toca un día para ver su guía completa.</p></div>
+      <div class="act-group"><div class="act-label">Campo:</div><div class="act-pills" id="pillsCampo"></div></div>
+      <div class="act-group"><div class="act-label">Belleza:</div><div class="act-pills" id="pillsBelleza"></div></div>
+      <div class="act-group"><div class="act-label">Salud:</div><div class="act-pills" id="pillsSalud"></div></div>
       <div class="planner-next" id="plannerNext"></div>
       <div class="planner-sub">Esta semana</div>
       <div class="week-strip" id="plannerWeek"></div>
@@ -358,20 +360,22 @@
     function activityCard(x){return '<article class="activity '+(x[1]?'':'bad')+'"><div class="mark">'+(x[1]?'✓':'×')+'</div><div class="act-body"><h3>'+x[0]+'</h3><p>'+x[2]+'</p></div><div class="verdict">'+(x[1]?'Favorable':'Mejor esperar')+'</div></article>'}
     function nextPruneDates(d){var out=[],cur=new Date(d);for(var i=0;i<50&&out.length<3;i++){var a=astro(cur);if(!a.waxing&&a.motion==='Descendente'&&[1,8,15,22].indexOf(cur.getDate())<0){if(!out.length||((cur-out[out.length-1])/DAY)>2)out.push(new Date(cur))}cur=new Date(cur.getTime()+DAY)}return out}
     function renderField(a,d){var data=evaluateField(a), pd=nextPruneDates(d);document.getElementById('fieldActivities').innerHTML=data.map(activityCard).join('')+'<div class="prune-banner"><div><strong>Próximas ventanas tradicionales de poda</strong><span>Menguante + luna descendente aproximada</span></div><div class="prune-dates">'+pd.map(shortDate).join(' · ')+'</div></div>'}
-    function renderBeauty(a){var w=a.waxing,full=a.illum>85,items=[
+    function evaluateBeauty(a){var w=a.waxing,full=a.illum>85;return [
       ['Corte de cabello',w,'La tradición elige creciente cuando se desea asociar el corte con renovación y crecimiento.'],
       ['Tinte',!full,'Fuera de la luna llena se considera un momento más sereno para cambios de imagen.'],
       ['Depilación',!w,'La fase menguante se elige tradicionalmente para rutinas orientadas a disminuir.'],
       ['Tratamientos de piel',a.illum<75,'Se privilegian fases intermedias para rutinas suaves y constantes.'],
       ['Corte de uñas',!w,'Menguante se asocia culturalmente con mantenimiento y duración.']
-    ];document.getElementById('beautyActivities').innerHTML=items.map(activityCard).join('')}
-    function renderWellness(a){var high=a.illum>70,items=[
+    ]}
+    function renderBeauty(a){document.getElementById('beautyActivities').innerHTML=evaluateBeauty(a).map(activityCard).join('')}
+    function evaluateWellness(a){var high=a.illum>70;return [
       ['Descanso',!high,high?'La tradición describe las noches muy iluminadas como más activas; protege tu rutina de sueño.':'La menor iluminación inspira una rutina nocturna más tranquila.'],
       ['Energía cotidiana',a.waxing,a.waxing?'Creciente simboliza impulso; elige una meta pequeña y concreta.':'Menguante simboliza cierre; termina algo antes de comenzar más.'],
       ['Ánimo y atención',true,'Usa la fase como una pausa de observación, no como explicación de cómo te sientes.'],
       ['Respiración consciente',true,'Cinco minutos de respiración lenta pueden servir como ritual de transición.'],
       ['Movimiento suave',a.motion==='Ascendente',a.motion==='Ascendente'?'La tradición lo asocia con expansión; una caminata puede acompañar esa intención.':'La tradición lo asocia con recogimiento; prioriza movilidad y recuperación.']
-    ];document.getElementById('wellnessActivities').innerHTML=items.map(activityCard).join('')}
+    ]}
+    function renderWellness(a){document.getElementById('wellnessActivities').innerHTML=evaluateWellness(a).map(activityCard).join('')}
     function phaseStyle(a){var p=a.progress,sx=Math.round((p<.5?(1-p*2):(p-.5)*2)*10);return '--shadowx:'+sx+'px'}
     function renderCalendar(){
       document.getElementById('monthTitle').textContent=monthNames[viewMonth.getMonth()]+' '+viewMonth.getFullYear();var grid=document.getElementById('monthGrid');grid.innerHTML='';
@@ -394,23 +398,27 @@
     document.getElementById('shareButton').onclick=function(){var a=astro(selected),text='Guía lunar del '+longDate(selected)+': '+a.phase+', '+Math.round(a.illum)+'% de luz, día '+a.type+'. Tradición lunar, no consejo científico.';if(navigator.share){navigator.share({title:'Guía lunar',text:text}).catch(function(){})}else if(navigator.clipboard){navigator.clipboard.writeText(text).then(function(){showToast('Resumen copiado')})}else{showToast('Compartir no está disponible')}};
     function showToast(msg){var t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(function(){t.classList.remove('show')},1800)}
     document.querySelectorAll('.tab-btn').forEach(function(btn){btn.onclick=function(){document.querySelectorAll('.tab-btn').forEach(function(b){b.classList.remove('active')});btn.classList.add('active');document.querySelectorAll('.tab-section').forEach(function(s){s.classList.remove('active')});var sec=document.getElementById(btn.dataset.tab);sec.classList.add('active');sec.scrollIntoView({behavior:'smooth',block:'start'})}});
-    var plannerIdx=5;
-    function plannerFav(idx,d){return evaluateField(astro(d))[idx][1]}
+    var plannerCat='campo', plannerIdx=5;
+    function plannerList(cat,a){return cat==='campo'?evaluateField(a):cat==='belleza'?evaluateBeauty(a):evaluateWellness(a)}
+    function plannerFavD(d){return plannerList(plannerCat,astro(d))[plannerIdx][1]}
     function gotoDay(d){selected=new Date(d.getFullYear(),d.getMonth(),d.getDate());viewMonth=new Date(selected.getFullYear(),selected.getMonth(),1);setHero(selected);renderCalendar();window.scrollTo({top:0,behavior:'smooth'});showToast('Guía del '+longDate(selected))}
     function renderPlanner(){
-      var names=evaluateField(astro(now)).map(function(x){return x[0]}), pills=document.getElementById('actPills');
-      pills.innerHTML=names.map(function(n,i){return '<button type="button" class="act-pill'+(i===plannerIdx?' active':'')+'" data-i="'+i+'">'+n+'</button>'}).join('');
-      pills.querySelectorAll('.act-pill').forEach(function(b){b.onclick=function(){plannerIdx=+b.dataset.i;renderPlanner()}});
+      [['campo','pillsCampo'],['belleza','pillsBelleza'],['salud','pillsSalud']].forEach(function(g){
+        var names=plannerList(g[0],astro(now)).map(function(x){return x[0]}), box=document.getElementById(g[1]);
+        box.innerHTML=names.map(function(n,i){return '<button type="button" class="act-pill'+(plannerCat===g[0]&&i===plannerIdx?' active':'')+'" data-i="'+i+'">'+n+'</button>'}).join('');
+        box.querySelectorAll('.act-pill').forEach(function(b){b.onclick=function(){plannerCat=g[0];plannerIdx=+b.dataset.i;renderPlanner()}});
+      });
+      var actName=plannerList(plannerCat,astro(now))[plannerIdx][0];
       var base=new Date(now.getFullYear(),now.getMonth(),now.getDate()), next=null;
-      for(var k=0;k<62&&!next;k++){var dk=new Date(base.getTime()+k*DAY);if(plannerFav(plannerIdx,dk))next=dk}
-      document.getElementById('plannerNext').innerHTML=next?('Próximo día favorable para <b>'+names[plannerIdx]+'</b>: <b>'+(sameDay(next,base)?'hoy, '+longDate(next):longDate(next))+'</b>'):'Sin días favorables en los próximos dos meses';
+      for(var k=0;k<62&&!next;k++){var dk=new Date(base.getTime()+k*DAY);if(plannerFavD(dk))next=dk}
+      document.getElementById('plannerNext').innerHTML=next?('Próximo día favorable para <b>'+actName+'</b>: <b>'+(sameDay(next,base)?'hoy, '+longDate(next):longDate(next))+'</b>'):'Sin días favorables en los próximos dos meses';
       var wd=['L','M','X','J','V','S','D'], wk='';
-      for(var j=0;j<7;j++){var dj=new Date(base.getTime()+j*DAY), okj=plannerFav(plannerIdx,dj);wk+='<button type="button" class="wk-day'+(okj?' ok':'')+(j===0?' today':'')+'" data-d="'+dj.getTime()+'"><span>'+wd[(dj.getDay()+6)%7]+'</span><b>'+dj.getDate()+'</b><i>'+(okj?'✓':'·')+'</i></button>'}
+      for(var j=0;j<7;j++){var dj=new Date(base.getTime()+j*DAY), okj=plannerFavD(dj);wk+='<button type="button" class="wk-day'+(okj?' ok':'')+(j===0?' today':'')+'" data-d="'+dj.getTime()+'"><span>'+wd[(dj.getDay()+6)%7]+'</span><b>'+dj.getDate()+'</b><i>'+(okj?'✓':'·')+'</i></button>'}
       document.getElementById('plannerWeek').innerHTML=wk;
       document.getElementById('plannerMonthTitle').textContent='Este mes · '+monthNames[base.getMonth()]+' '+base.getFullYear();
       var y=base.getFullYear(), m=base.getMonth(), off=(new Date(y,m,1).getDay()+6)%7, days=new Date(y,m+1,0).getDate(), mg=wd.map(function(w){return '<span class="pm-h">'+w+'</span>'}).join('');
       for(var b=0;b<off;b++)mg+='<span></span>';
-      for(var n=1;n<=days;n++){var dn=new Date(y,m,n), okm=plannerFav(plannerIdx,dn), past=dn<base;mg+='<button type="button" class="pm-day'+(okm?' ok':'')+(sameDay(dn,base)?' today':'')+(past?' past':'')+'" data-d="'+dn.getTime()+'">'+n+'</button>'}
+      for(var n=1;n<=days;n++){var dn=new Date(y,m,n), okm=plannerFavD(dn), past=dn<base;mg+='<button type="button" class="pm-day'+(okm?' ok':'')+(sameDay(dn,base)?' today':'')+(past?' past':'')+'" data-d="'+dn.getTime()+'">'+n+'</button>'}
       document.getElementById('plannerMonth').innerHTML=mg;
       document.querySelectorAll('#plannerSection [data-d]').forEach(function(el){el.onclick=function(){gotoDay(new Date(+el.dataset.d))}});
     }
