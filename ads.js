@@ -9,14 +9,13 @@
     '[data-adslot="sponsor"]{max-width:1120px;margin:12px auto 0;padding:0 16px;box-sizing:border-box}' +
     '[data-adslot="google"]{margin:20px 0 4px}' +
     '.adbox{display:flex;align-items:center;gap:10px;justify-content:center;text-align:left;' +
-    'background:rgba(229,184,75,.08);border:1px solid rgba(229,184,75,.28);border-radius:14px;padding:10px 14px;' +
-    'font-family:Manrope,system-ui,sans-serif;color:#f4f1e9}' +
+    'background:#fff;border:1px solid rgba(180,129,32,.45);border-radius:14px;padding:10px 14px;' +
+    'font-family:Manrope,system-ui,sans-serif;color:#18221d;box-shadow:0 8px 22px rgba(64,49,28,.10)}' +
     '.adbox .adico{display:flex;align-items:center;justify-content:center;width:30px;height:30px;border-radius:9px;color:#fff;font-weight:800;flex:0 0 auto}' +
     '.adbox .admarca{font-weight:800;font-size:.92rem}' +
     '.adbox .adsub{opacity:.82;font-size:.85rem;margin-left:2px}' +
     '.adbox a.adlink{display:flex;align-items:center;gap:10px;color:inherit;text-decoration:none}' +
-    '@media (prefers-color-scheme:light){.adbox{color:#17201d}}' +
-    '.pieLabmet{margin:26px 0 8px;padding:16px 6px 4px;border-top:1px solid rgba(229,184,75,.22);' +
+    '.pieLabmet{margin:26px 0 8px;padding:16px 6px 4px;border-top:1px solid rgba(20,30,25,.15);' +
     'font-size:.85rem;opacity:.85;text-align:center;line-height:1.7}' +
     '.pieLabmet a{color:inherit;font-weight:700}';
   document.head.appendChild(st);

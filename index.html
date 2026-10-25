@@ -17,71 +17,90 @@
   <title>Calendario Lunar · LABMET — Fases de la Luna, campo, belleza y bienestar</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;1,500;1,600&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:ital,wght@0,400;0,500;0,600;0,700;0,800;1,500;1,600&display=swap" rel="stylesheet">
   <style>
     :root{
-      color-scheme:light dark;
-      --bg:#07101c; --bg-2:#0d1726; --ink:#f4f1e9; --muted:#aeb8c3;
-      --cream:#f5f0e6; --cream-2:#ebe3d4; --paper-ink:#18221d; --paper-muted:#5e685f;
-      --gold:#e5b84b; --gold-deep:#b48120; --green:#2e8a69; --green-soft:#dcefe5;
-      --red:#bd5c5f; --red-soft:#f4dddd; --line:rgba(255,255,255,.11);
-      --shadow:0 24px 70px rgba(0,0,0,.34);
-    }
-    @media(prefers-color-scheme:light){
-      :root{--bg:#f0eadf;--bg-2:#e5ddcf;--ink:#17201d;--muted:#59675f;--line:rgba(20,30,25,.12);--shadow:0 24px 60px rgba(64,49,28,.18)}
+      color-scheme:light;
+      --bg:#f3edda; --bg-2:#ece3cb; --ink:#18221d; --muted:#5f6a60;
+      --cream:#f6f1e6; --cream-2:#ece4d0; --paper:#faf6ec; --paper-ink:#18221d; --paper-muted:#5f6a60;
+      --gold:#e5b84b; --gold-deep:#b48120; --green:#1e7a4f; --green-deep:#14532d; --green-soft:#e2f1e6;
+      --red:#c0453e; --red-soft:#f9e3e1; --line:rgba(20,30,25,.13);
+      --shadow:0 18px 45px rgba(64,49,28,.15);
     }
     *{box-sizing:border-box}
     html{scroll-behavior:smooth}
-    body{margin:0;background:radial-gradient(circle at 82% 2%,rgba(229,184,75,.11),transparent 28%),linear-gradient(180deg,var(--bg),var(--bg-2));color:var(--ink);font-family:Manrope,sans-serif;min-height:100vh}
+    body{margin:0;background:linear-gradient(180deg,var(--bg),var(--bg-2));color:var(--ink);font-family:Manrope,sans-serif;min-height:100vh}
     button{font:inherit}
-    .app{max-width:1120px;margin:0 auto;padding:22px clamp(16px,4vw,42px) 128px}
-    .topline{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:20px}
-    .date-chip{display:flex;align-items:center;gap:10px;color:var(--muted);font-weight:700;font-size:.9rem}
-    .date-chip::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--gold);box-shadow:0 0 0 5px rgba(229,184,75,.12)}
-    .cal-button,.ghost-button{border:1px solid var(--line);background:rgba(255,255,255,.06);color:var(--ink);border-radius:999px;padding:10px 14px;cursor:pointer;font-weight:750;display:inline-flex;align-items:center;gap:8px}
-    .cal-button:hover,.ghost-button:hover{background:rgba(229,184,75,.13)}
-    .hero{display:grid;grid-template-columns:minmax(0,1.08fr) minmax(300px,.92fr);gap:22px;align-items:stretch}
-    .hero-copy{padding:clamp(14px,3vw,34px) 0;display:flex;flex-direction:column;justify-content:center}
-    .eyebrow{color:var(--gold);font-size:.76rem;font-weight:800;letter-spacing:.18em;text-transform:uppercase;margin-bottom:10px}
-    h1{font-family:"Cormorant Garamond",serif;font-size:clamp(3.4rem,7vw,6.8rem);line-height:.78;letter-spacing:-.045em;margin:0 0 20px;font-weight:600}
-    .hero-sub{font-size:clamp(1rem,1.8vw,1.18rem);line-height:1.6;color:var(--muted);max-width:56ch;margin:0 0 22px}
-    .status-row{display:flex;flex-wrap:wrap;gap:9px}
-    .status{padding:9px 13px;border-radius:999px;background:rgba(229,184,75,.12);color:var(--gold);font-size:.86rem;font-weight:800;border:1px solid rgba(229,184,75,.24)}
-    .moon-stage{position:relative;min-height:430px;border-radius:38px 8px 38px 38px;overflow:hidden;background:radial-gradient(circle at 50% 38%,rgba(116,145,180,.23),transparent 29%),linear-gradient(145deg,#050b14,#121c30 60%,#17152b);box-shadow:var(--shadow);display:flex;align-items:center;justify-content:center;padding:28px}
-    .moon-stage::before{content:"";position:absolute;inset:0;opacity:.4;background-image:radial-gradient(circle at 20% 22%,#fff 0 1px,transparent 1.4px),radial-gradient(circle at 73% 18%,#fff 0 1px,transparent 1.5px),radial-gradient(circle at 78% 66%,#fff 0 1px,transparent 1.4px),radial-gradient(circle at 28% 75%,#fff 0 1px,transparent 1.5px);background-size:90px 80px,130px 120px,160px 145px,120px 110px}
-    .moon-wrap{position:relative;z-index:1;text-align:center}
-    #moonSvg{width:min(235px,62vw);height:auto;filter:drop-shadow(0 15px 35px rgba(188,204,229,.22))}
-    .light-pill{margin-top:-4px;display:inline-flex;gap:8px;background:rgba(8,14,25,.72);border:1px solid rgba(255,255,255,.13);padding:9px 14px;border-radius:999px;color:#f4f0e8;font-size:.84rem;font-weight:800;backdrop-filter:blur(6px)}
-    .facts{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:22px 0}
-    .fact{border-top:1px solid var(--line);padding:16px 4px 0}
-    .fact b{display:block;font-family:"Cormorant Garamond",serif;color:var(--ink);font-size:1.55rem;line-height:1.05}
-    .fact span{display:block;color:var(--muted);font-size:.77rem;margin-top:7px;font-weight:700}
-    .paper{background:var(--cream);color:var(--paper-ink);border-radius:38px 10px 38px 38px;margin-top:24px;padding:clamp(20px,4vw,42px);box-shadow:var(--shadow)}
+    .app{max-width:1120px;margin:0 auto;padding:16px clamp(16px,4vw,42px) 140px}
+    .topline{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:16px}
+    .date-chip{display:flex;align-items:center;gap:10px;color:var(--muted);font-weight:700;font-size:.9rem;text-transform:capitalize}
+    .date-chip::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--gold);box-shadow:0 0 0 5px rgba(229,184,75,.16)}
+    .cal-button,.ghost-button{border:1px solid var(--line);background:#fff;color:var(--ink);border-radius:999px;padding:10px 14px;cursor:pointer;font-weight:750;display:inline-flex;align-items:center;gap:8px}
+    .cal-button:hover,.ghost-button:hover{background:#fdf6df}
+    .hero{position:relative;overflow:hidden;text-align:center;border-radius:40px;color:#f7f3ea;padding:clamp(22px,4.5vw,46px);background:radial-gradient(circle at 50% 26%,rgba(96,128,185,.30),transparent 55%),linear-gradient(160deg,#0a1526,#0d1b31 55%,#111736);box-shadow:0 24px 70px rgba(20,16,4,.35)}
+    .hero::before{content:"";position:absolute;inset:0;opacity:.45;background-image:radial-gradient(circle at 20% 22%,#fff 0 1px,transparent 1.4px),radial-gradient(circle at 73% 18%,#fff 0 1px,transparent 1.5px),radial-gradient(circle at 78% 66%,#fff 0 1px,transparent 1.4px),radial-gradient(circle at 28% 75%,#fff 0 1px,transparent 1.5px);background-size:90px 80px,130px 120px,160px 145px,120px 110px;pointer-events:none}
+    .moon-stage{position:relative;display:flex;align-items:flex-start;justify-content:center;padding-top:2px}
+    .moon-wrap{position:relative;text-align:center}
+    #moonSvg{width:min(290px,68vw);height:auto;filter:drop-shadow(0 18px 42px rgba(188,204,229,.28))}
+    .light-pill{margin-top:-14px;position:relative;z-index:2;display:inline-flex;gap:8px;background:rgba(8,14,25,.74);border:1px solid rgba(255,255,255,.16);padding:9px 15px;border-radius:999px;color:#f4f0e8;font-size:.85rem;font-weight:800;backdrop-filter:blur(6px)}
+    .hero-copy{position:relative;display:flex;flex-direction:column;align-items:center;padding-top:16px}
+    .eyebrow{color:var(--gold);font-size:.8rem;font-weight:800;letter-spacing:.32em;text-transform:uppercase;margin-bottom:10px}
+    h1{font-family:Manrope,sans-serif;font-weight:800;font-size:clamp(3rem,8.5vw,5.5rem);line-height:.96;letter-spacing:-.02em;margin:0 0 18px;color:#fff}
+    .hero-sub{font-style:italic;font-size:clamp(1rem,1.9vw,1.16rem);line-height:1.6;color:rgba(247,243,234,.86);max-width:54ch;margin:0 auto 22px}
+    .status-row{display:flex;flex-wrap:wrap;gap:9px;justify-content:center}
+    .status{padding:10px 15px;border-radius:999px;background:rgba(6,10,20,.55);color:#fff;font-size:.87rem;font-weight:800;border:1px solid rgba(255,255,255,.17)}
+    .facts{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:26px auto 0;width:100%;max-width:680px}
+    .fact{border-top:1px solid rgba(255,255,255,.16);padding:15px 4px 0}
+    .fact b{display:block;color:#fff;font-size:1.22rem;font-weight:800;line-height:1.1}
+    .fact span{display:block;color:rgba(247,243,234,.62);font-size:.74rem;margin-top:6px;font-weight:700}
+    .paper{background:var(--paper);color:var(--paper-ink);border-radius:36px;margin-top:24px;padding:clamp(20px,4vw,42px);box-shadow:var(--shadow)}
     .section-head{display:flex;justify-content:space-between;gap:18px;align-items:end;margin-bottom:22px}
-    .section-head h2{font-family:"Cormorant Garamond",serif;font-size:clamp(2rem,4vw,3.35rem);line-height:1;margin:0}
+    .section-head h2{font-size:clamp(1.7rem,3.6vw,2.6rem);font-weight:800;letter-spacing:-.01em;line-height:1.05;margin:0}
     .section-head p{margin:0;color:var(--paper-muted);max-width:45ch;font-size:.9rem;line-height:1.5}
+    .act-label{font-weight:800;font-size:.8rem;letter-spacing:.1em;text-transform:uppercase;color:var(--paper-muted);margin-bottom:10px}
+    .act-pills{display:flex;flex-wrap:wrap;gap:8px}
+    .act-pill{border:1.5px solid rgba(20,30,25,.16);background:#fff;border-radius:999px;padding:9px 14px;font-weight:700;font-size:.85rem;cursor:pointer;color:var(--paper-ink)}
+    .act-pill:hover{border-color:var(--green)}
+    .act-pill.active{background:var(--green);border-color:var(--green);color:#fff}
+    .planner-next{margin:18px 0 2px;font-size:.98rem;line-height:1.5;background:var(--green-soft);border:1px solid rgba(30,122,79,.28);color:var(--green-deep);border-radius:14px;padding:12px 15px}
+    .planner-sub{font-weight:800;font-size:.76rem;letter-spacing:.09em;text-transform:uppercase;color:var(--paper-muted);margin:20px 0 9px}
+    .week-strip{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}
+    .wk-day{display:flex;flex-direction:column;align-items:center;gap:2px;padding:9px 2px;border-radius:14px;border:1px solid rgba(31,49,38,.12);background:#fff;cursor:pointer;color:var(--paper-ink)}
+    .wk-day span{font-size:.62rem;font-weight:800;color:var(--paper-muted)}
+    .wk-day b{font-size:1.02rem}
+    .wk-day i{font-style:normal;font-size:.72rem;color:#b9beb4}
+    .wk-day.ok{background:var(--green);border-color:var(--green);color:#fff}
+    .wk-day.ok span{color:rgba(255,255,255,.78)}
+    .wk-day.ok i{color:#ffd34d}
+    .wk-day.today{outline:2px solid var(--gold-deep);outline-offset:1px}
+    .planner-month{display:grid;grid-template-columns:repeat(7,1fr);gap:5px}
+    .pm-h{text-align:center;font-size:.62rem;font-weight:800;color:var(--paper-muted);padding:3px}
+    .pm-day{aspect-ratio:1;border:1px solid rgba(31,49,38,.09);background:#fff;border-radius:11px;font-weight:700;font-size:.82rem;cursor:pointer;color:var(--paper-ink);display:flex;align-items:center;justify-content:center;padding:0}
+    .pm-day.ok{background:var(--green);border-color:var(--green);color:#fff}
+    .pm-day.today{outline:2px solid var(--gold-deep);outline-offset:-2px}
+    .pm-day.past{opacity:.4}
     .recommend-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
-    .recommend{background:rgba(255,255,255,.6);border:1px solid rgba(31,49,38,.1);border-radius:22px;padding:18px;display:grid;grid-template-columns:44px 1fr;gap:13px;align-items:start}
-    .recommend .mark,.activity .mark{width:42px;height:42px;border-radius:14px;display:grid;place-items:center;font-weight:900;background:var(--green-soft);color:var(--green)}
+    .recommend{background:#fff;border:1px solid rgba(31,49,38,.09);border-radius:26px;padding:18px;display:grid;grid-template-columns:48px 1fr;gap:13px;align-items:start}
+    .recommend .mark,.activity .mark{width:48px;height:48px;border-radius:16px;display:grid;place-items:center;font-weight:900;background:var(--green-soft);color:var(--green)}
+    .recommend .mark{background:#f7e8c3;color:#8a6d1f;font-size:1.05rem}
     .recommend h3,.activity h3{margin:1px 0 6px;font-size:1rem}
     .recommend p,.activity p{margin:0;color:var(--paper-muted);font-size:.87rem;line-height:1.5}
-    .wisdom{margin-top:22px;background:#25211f;color:#f6f0e7;border-radius:12px 36px 36px 36px;padding:clamp(25px,4vw,42px);position:relative;overflow:hidden}
-    .wisdom::after{content:"";position:absolute;width:150px;height:150px;border:24px solid rgba(255,255,255,.05);border-radius:50%;right:-48px;bottom:-62px}
-    .wisdom .label{color:var(--gold);font-weight:800;letter-spacing:.13em;font-size:.73rem;text-transform:uppercase}
-    .wisdom blockquote{font-family:"Cormorant Garamond",serif;font-size:clamp(1.55rem,3vw,2.4rem);line-height:1.25;font-style:italic;max-width:700px;margin:18px 0 0}
-    .activities{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
-    .activity{background:rgba(255,255,255,.6);border:1px solid rgba(31,49,38,.1);border-radius:24px;padding:16px;min-height:153px}
-    .activity .top{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
-    .activity .mark{width:38px;height:38px;border-radius:12px}
+    .wisdom{margin-top:22px;background:#17130e;color:#f6f0e7;border-radius:36px;padding:clamp(25px,4vw,42px);position:relative;overflow:hidden}
+    .wisdom::after{content:"";position:absolute;width:170px;height:170px;border:26px solid rgba(255,255,255,.05);border-radius:50%;right:-52px;bottom:-70px}
+    .wisdom .label{color:var(--gold);font-weight:800;letter-spacing:.14em;font-size:.73rem;text-transform:uppercase}
+    .wisdom blockquote{font-size:clamp(1.5rem,3vw,2.3rem);line-height:1.3;font-style:italic;font-weight:600;max-width:700px;margin:18px 0 0}
+    .activities{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+    .activity{background:#fff;border:1px solid rgba(31,49,38,.09);border-radius:26px;padding:18px;display:grid;grid-template-columns:48px 1fr auto;gap:14px;align-items:start}
+    .activity .mark{font-size:1.25rem}
     .activity.bad .mark{background:var(--red-soft);color:var(--red)}
-    .activity .verdict{font-size:.72rem;font-weight:800;color:var(--green);text-transform:uppercase;letter-spacing:.06em}
-    .activity.bad .verdict{color:var(--red)}
-    .prune-banner{grid-column:1/-1;background:#183d31;color:white;border-radius:26px;padding:22px;display:flex;justify-content:space-between;align-items:center;gap:20px}
-    .prune-banner strong{font-family:"Cormorant Garamond",serif;font-size:1.7rem;display:block}
+    .activity .verdict{font-size:.68rem;font-weight:800;color:var(--green);text-transform:uppercase;letter-spacing:.05em;background:var(--green-soft);padding:6px 9px;border-radius:999px;white-space:nowrap}
+    .activity.bad .verdict{color:var(--red);background:var(--red-soft)}
+    .prune-banner{grid-column:1/-1;background:#183d31;color:white;border-radius:28px;padding:22px;display:flex;justify-content:space-between;align-items:center;gap:20px}
+    .prune-banner strong{font-size:1.3rem;font-weight:800;display:block}
     .prune-banner span{font-size:.86rem;color:#cae2d7}
     .prune-dates{color:#f3d378;font-weight:800;text-align:right}
     .calendar-shell{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(270px,.7fr);gap:18px}
-    .calendar-card,.day-panel{background:rgba(255,255,255,.58);border:1px solid rgba(31,49,38,.1);border-radius:26px;padding:18px}
+    .calendar-card,.day-panel{background:#fff;border:1px solid rgba(31,49,38,.09);border-radius:26px;padding:18px}
     .calendar-nav{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
     .calendar-nav h3{margin:0;font-size:1rem;text-transform:capitalize}
     .icon-btn{width:38px;height:38px;border:0;border-radius:50%;background:var(--cream-2);color:var(--paper-ink);cursor:pointer;font-size:1.15rem}
@@ -90,12 +109,12 @@
     .day{aspect-ratio:1;border:0;border-radius:12px;background:transparent;color:var(--paper-ink);cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;font-size:.79rem;font-weight:700}
     .day:hover{background:var(--cream-2)}
     .day.selected{background:#1d4d3e;color:white}
-    .day.today{outline:2px solid var(--gold);outline-offset:-2px}
+    .day.today{outline:2px solid var(--gold-deep);outline-offset:-2px}
     .day.blank{pointer-events:none}
     .phase-dot{width:12px;height:12px;border-radius:50%;background:var(--phase,#1c2730);box-shadow:inset var(--shadowx,0) 0 0 #e7dcae;border:1px solid rgba(0,0,0,.18)}
     .day.selected .phase-dot{border-color:rgba(255,255,255,.5)}
     .day-panel .big-date{color:var(--paper-muted);font-size:.76rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em}
-    .day-panel h3{font-family:"Cormorant Garamond",serif;font-size:2.15rem;line-height:1;margin:10px 0}
+    .day-panel h3{font-size:1.9rem;font-weight:800;line-height:1.05;margin:10px 0}
     .day-panel .day-tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px}
     .day-panel .day-tags span{padding:6px 9px;background:var(--cream-2);border-radius:999px;font-size:.71rem;font-weight:800}
     .day-panel ul{padding:0;margin:0;list-style:none;display:grid;gap:10px}
@@ -103,12 +122,12 @@
     .day-panel li::before{content:"✓";color:var(--green);font-weight:900}
     .annual{margin-top:18px}
     .annual-summary{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px}
-    .annual-col{background:rgba(255,255,255,.58);border-radius:22px;padding:16px}
+    .annual-col{background:#fff;border:1px solid rgba(31,49,38,.09);border-radius:22px;padding:16px}
     .annual-col h3{margin:0 0 12px;font-size:.95rem}
     .moon-dates{display:flex;flex-wrap:wrap;gap:6px}
     .moon-dates span{background:var(--cream-2);padding:6px 8px;border-radius:9px;font-size:.7rem;font-weight:750}
     .mini-months{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
-    .mini-month{background:rgba(255,255,255,.55);border-radius:18px;padding:11px}
+    .mini-month{background:#fff;border:1px solid rgba(31,49,38,.09);border-radius:18px;padding:11px}
     .mini-month strong{display:block;font-size:.73rem;text-transform:capitalize;margin-bottom:7px}
     .mini-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:2px}
     .mini-grid span{font-size:.48rem;text-align:center;color:var(--paper-muted);height:9px}
@@ -116,25 +135,21 @@
     .notice{margin-top:20px;padding:16px 18px;border:1px solid rgba(31,49,38,.14);border-radius:18px;color:var(--paper-muted);font-size:.78rem;line-height:1.55}
     .tab-section{display:none}
     .tab-section.active{display:block}
-    .bottom-nav{position:fixed;z-index:20;left:50%;transform:translateX(-50%);bottom:max(12px,env(safe-area-inset-bottom));width:min(680px,calc(100% - 24px));display:grid;grid-template-columns:1fr 1fr .82fr 1fr 1fr;align-items:center;padding:9px;background:color-mix(in srgb,var(--cream) 92%,transparent);border:1px solid rgba(30,43,36,.12);box-shadow:0 20px 55px rgba(0,0,0,.28);border-radius:27px;backdrop-filter:blur(15px)}
-    .tab-btn{border:0;background:transparent;color:#89928b;border-radius:18px;padding:8px 4px;cursor:pointer;font-size:.65rem;font-weight:800;text-transform:uppercase;display:grid;justify-items:center;gap:5px}
-    .share-btn{width:58px;height:58px;margin:-24px auto 0;border:5px solid var(--cream);border-radius:50%;background:var(--gold);color:#282016;display:grid;place-items:center;cursor:pointer;box-shadow:0 12px 25px rgba(180,129,32,.3)}
+    .bottom-nav{position:fixed;z-index:20;left:50%;transform:translateX(-50%);bottom:max(12px,env(safe-area-inset-bottom));width:min(620px,calc(100% - 32px));display:grid;grid-template-columns:1fr 1fr .82fr 1fr 1fr;align-items:center;padding:10px 14px;background:#fff;border:1px solid rgba(30,43,36,.07);box-shadow:0 18px 45px rgba(30,25,10,.25);border-radius:999px}
+    .tab-btn{border:0;background:transparent;color:#9aa39c;border-radius:999px;padding:8px 4px;cursor:pointer;font-size:.64rem;font-weight:800;text-transform:uppercase;display:grid;justify-items:center;gap:5px}
+    .share-btn{width:60px;height:60px;margin:-30px auto 0;border:5px solid #fff;border-radius:50%;background:linear-gradient(180deg,#ffb020,#f59e0b);color:#231a04;display:grid;place-items:center;cursor:pointer;box-shadow:0 14px 28px rgba(245,158,11,.45)}
     .share-btn svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:2}
-    .tab-btn svg{width:21px;height:21px;stroke:currentColor;fill:none;stroke-width:1.8}
-    .tab-btn.active{color:#17684f;background:rgba(40,128,96,.09)}
-    .toast{position:fixed;z-index:30;left:50%;bottom:104px;transform:translate(-50%,20px);background:#1f2522;color:white;padding:10px 15px;border-radius:999px;font-size:.8rem;opacity:0;pointer-events:none;transition:.25s}
+    .tab-btn svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.8}
+    .tab-btn.active{color:#14684a;background:rgba(30,122,79,.1)}
+    .toast{position:fixed;z-index:30;left:50%;bottom:112px;transform:translate(-50%,20px);background:#1f2522;color:white;padding:10px 15px;border-radius:999px;font-size:.8rem;opacity:0;pointer-events:none;transition:.25s}
     .toast.show{opacity:1;transform:translate(-50%,0)}
     @media(max-width:820px){
-      .hero{grid-template-columns:1fr}.hero-copy{padding-bottom:2px}.moon-stage{min-height:360px;order:-1}.facts{grid-template-columns:repeat(2,1fr)}
-      .activities{grid-template-columns:repeat(2,1fr)}.calendar-shell{grid-template-columns:1fr}.mini-months{grid-template-columns:repeat(3,1fr)}
-    }
-    @media(max-width:560px){
-      .app{padding:15px 13px 118px}.topline{margin-bottom:12px}.hero{gap:10px}.hero-copy{padding:16px 4px}h1{font-size:4.1rem}.hero-sub{font-size:.94rem}
-      .moon-stage{min-height:330px;border-radius:28px 7px 28px 28px}.paper{margin-top:14px;padding:20px 14px;border-radius:28px 7px 28px 28px}.section-head{display:block}.section-head p{margin-top:8px}
-      .recommend-grid,.activities{grid-template-columns:1fr}.recommend{padding:15px}.prune-banner{display:block}.prune-dates{text-align:left;margin-top:10px}.annual-summary{grid-template-columns:1fr}.mini-months{grid-template-columns:repeat(2,1fr)}
-      .cal-button span{display:none}.bottom-nav{width:calc(100% - 16px);bottom:max(8px,env(safe-area-inset-bottom));border-radius:23px}.tab-btn{font-size:.58rem}
+      .facts{grid-template-columns:repeat(2,1fr)}
+      .activities,.recommend-grid{grid-template-columns:1fr}.calendar-shell{grid-template-columns:1fr}.mini-months{grid-template-columns:repeat(3,1fr)}
+      .section-head{flex-direction:column;align-items:start;gap:8px}
     }
     @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
+
   </style>
 </head>
 <body>
@@ -148,6 +163,24 @@
     </div>
 
     <section class="hero" aria-labelledby="phaseName">
+      <div class="moon-stage" aria-label="Representación de la fase lunar actual">
+        <div class="moon-wrap">
+          <svg id="moonSvg" viewBox="0 0 220 220" role="img" aria-label="Fase lunar ilustrada">
+            <defs>
+              <clipPath id="moonClip"><circle cx="110" cy="110" r="92"/></clipPath>
+              <clipPath id="litClip"><path id="litClipPath" d=""/></clipPath>
+              <filter id="softTerm" x="-5%" y="-5%" width="110%" height="110%"><feGaussianBlur stdDeviation="1.1"/></filter>
+            </defs>
+            <circle cx="110" cy="110" r="99" fill="rgba(232,225,196,.08)"/>
+            <g clip-path="url(#moonClip)">
+              <image href="/luna.jpg" x="18" y="18" width="184" height="184" opacity="0.34"/>
+              <g clip-path="url(#litClip)" filter="url(#softTerm)"><image href="/luna.jpg" x="18" y="18" width="184" height="184"/></g>
+              <circle cx="110" cy="110" r="92" fill="none" stroke="rgba(255,255,255,.14)"/>
+            </g>
+          </svg>
+          <div class="light-pill">Luz <span id="illumination">—%</span></div>
+        </div>
+      </div>
       <div class="hero-copy">
         <div class="eyebrow" id="phaseEyebrow">Ciclo lunar de hoy</div>
         <h1 id="phaseName">Luna</h1>
@@ -160,18 +193,18 @@
           <div class="fact"><b id="nextFull">—</b><span>Próxima luna llena</span></div>
         </div>
       </div>
-      <div class="moon-stage" aria-label="Representación de la fase lunar actual">
-        <div class="moon-wrap">
-          <svg id="moonSvg" viewBox="0 0 220 220" role="img" aria-label="Fase lunar ilustrada">
-            <defs><clipPath id="moonClip"><circle cx="110" cy="110" r="92"/></clipPath><radialGradient id="moonBase" cx="36%" cy="30%"><stop offset="0" stop-color="#fff8d7"/><stop offset=".68" stop-color="#d9d0aa"/><stop offset="1" stop-color="#aaa27f"/></radialGradient></defs>
-            <circle cx="110" cy="110" r="98" fill="rgba(232,225,196,.09)"/>
-            <circle cx="110" cy="110" r="92" fill="#111928"/>
-            <path id="litPath" fill="url(#moonBase)" clip-path="url(#moonClip)"/>
-            <g clip-path="url(#moonClip)" opacity=".16" fill="#59616b"><circle cx="75" cy="74" r="12"/><circle cx="142" cy="58" r="7"/><circle cx="153" cy="118" r="16"/><circle cx="93" cy="141" r="9"/><circle cx="62" cy="119" r="6"/></g>
-          </svg>
-          <div class="light-pill">Luz <span id="illumination">—%</span></div>
-        </div>
-      </div>
+          </section>
+
+    <section class="paper planner" id="plannerSection">
+      <div class="section-head"><h2>Planifica tu actividad</h2><p>Elige una labor y mira en verde los días favorables de esta semana y de este mes, según la tradición lunar. Toca un día para ver su guía completa.</p></div>
+      <div class="act-label">Actividades:</div>
+      <div class="act-pills" id="actPills"></div>
+      <div class="planner-next" id="plannerNext"></div>
+      <div class="planner-sub">Esta semana</div>
+      <div class="week-strip" id="plannerWeek"></div>
+      <div class="planner-sub" id="plannerMonthTitle">Este mes</div>
+      <div class="planner-month" id="plannerMonth"></div>
+      <div class="notice">Orientación de la tradición lunar, no consejo agronómico: el suelo, el clima y la sanidad del cultivo tienen la última palabra.</div>
     </section>
 
     <section class="paper tab-section active" id="todaySection">
@@ -284,12 +317,12 @@
       ];return items;
     }
     function setHero(d){
-      var a=astro(d);document.getElementById('topDate').textContent=longDate(d);document.getElementById('phaseName').textContent=a.phase;
+      var a=astro(d);document.getElementById('phaseEyebrow').textContent=({'Luna nueva':'Novilunio','Luna llena':'Plenilunio'})[a.phase]||a.phase;document.getElementById('topDate').textContent=longDate(d);document.getElementById('phaseName').textContent=a.phase;
       document.getElementById('phaseSummary').textContent=(a.waxing?'La superficie iluminada está aumentando. ':'La superficie iluminada está disminuyendo. ')+typeMeta[a.type].why;
       document.getElementById('dayType').textContent='Día '+a.type;document.getElementById('motion').textContent='Luna '+a.motion.toLowerCase();
       document.getElementById('age').textContent=a.age.toFixed(1)+' días';document.getElementById('distance').textContent=Math.round(a.dist/1000)+' mil km';
       document.getElementById('illumination').textContent=Math.round(a.illum)+'%';document.getElementById('nextNew').textContent=shortDate(nextEvent(d,0));document.getElementById('nextFull').textContent=shortDate(nextEvent(d,CYCLE/2));
-      document.getElementById('litPath').setAttribute('d',moonPath(a));document.getElementById('moonSvg').setAttribute('aria-label',a.phase+', '+Math.round(a.illum)+' por ciento iluminada');
+      document.getElementById('litClipPath').setAttribute('d',moonPath(a));document.getElementById('moonSvg').setAttribute('aria-label',a.phase+', '+Math.round(a.illum)+' por ciento iluminada');
       renderRecs(a);renderField(a,d);renderBeauty(a);renderWellness(a);renderDayPanel(d);
     }
     function renderRecs(a){document.getElementById('todayRecs').innerHTML=recsFor(a).map(function(r,i){return '<article class="recommend"><div class="mark">'+(i+1)+'</div><div><h3>'+r.title+'</h3><p>'+r.text+'</p></div></article>'}).join('')}
@@ -307,10 +340,11 @@
         ['Riego',t==='Hoja'||a.phase.indexOf('llena')>-1,'Los calendarios tradicionales relacionan los días hoja y la luna llena con humedad.'],
         ['Control de plagas',wan,'La fase menguante se usa tradicionalmente para tareas de reducción y limpieza.'],
         ['Corte de madera',wan&&a.motion==='Descendente','Se prefiere menguante descendente para madera destinada a conservación.'],
+        ['Cortar césped',wan,'La tradición lo corta en menguante para que tarde más en volver a crecer.'],
         ['Injertos',a.waxing&&a.motion==='Ascendente','Creciente ascendente se asocia con circulación hacia la parte aérea.']
       ];
     }
-    function activityCard(x){return '<article class="activity '+(x[1]?'':'bad')+'"><div class="top"><div class="mark">'+(x[1]?'✓':'×')+'</div><div class="verdict">'+(x[1]?'Favorable':'Mejor esperar')+'</div></div><h3>'+x[0]+'</h3><p>'+x[2]+'</p></article>'}
+    function activityCard(x){return '<article class="activity '+(x[1]?'':'bad')+'"><div class="mark">'+(x[1]?'✓':'×')+'</div><div class="act-body"><h3>'+x[0]+'</h3><p>'+x[2]+'</p></div><div class="verdict">'+(x[1]?'Favorable':'Mejor esperar')+'</div></article>'}
     function nextPruneDates(d){var out=[],cur=new Date(d);for(var i=0;i<50&&out.length<3;i++){var a=astro(cur);if(!a.waxing&&a.motion==='Descendente'&&[1,8,15,22].indexOf(cur.getDate())<0){if(!out.length||((cur-out[out.length-1])/DAY)>2)out.push(new Date(cur))}cur=new Date(cur.getTime()+DAY)}return out}
     function renderField(a,d){var data=evaluateField(a), pd=nextPruneDates(d);document.getElementById('fieldActivities').innerHTML=data.map(activityCard).join('')+'<div class="prune-banner"><div><strong>Próximas ventanas tradicionales de poda</strong><span>Menguante + luna descendente aproximada</span></div><div class="prune-dates">'+pd.map(shortDate).join(' · ')+'</div></div>'}
     function renderBeauty(a){var w=a.waxing,full=a.illum>85,items=[
@@ -349,7 +383,27 @@
     document.getElementById('shareButton').onclick=function(){var a=astro(selected),text='Guía lunar del '+longDate(selected)+': '+a.phase+', '+Math.round(a.illum)+'% de luz, día '+a.type+'. Tradición lunar, no consejo científico.';if(navigator.share){navigator.share({title:'Guía lunar',text:text}).catch(function(){})}else if(navigator.clipboard){navigator.clipboard.writeText(text).then(function(){showToast('Resumen copiado')})}else{showToast('Compartir no está disponible')}};
     function showToast(msg){var t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(function(){t.classList.remove('show')},1800)}
     document.querySelectorAll('.tab-btn').forEach(function(btn){btn.onclick=function(){document.querySelectorAll('.tab-btn').forEach(function(b){b.classList.remove('active')});btn.classList.add('active');document.querySelectorAll('.tab-section').forEach(function(s){s.classList.remove('active')});var sec=document.getElementById(btn.dataset.tab);sec.classList.add('active');sec.scrollIntoView({behavior:'smooth',block:'start'})}});
-    setHero(selected);renderCalendar();renderAnnual();
+    var plannerIdx=5;
+    function plannerFav(idx,d){return evaluateField(astro(d))[idx][1]}
+    function gotoDay(d){selected=new Date(d.getFullYear(),d.getMonth(),d.getDate());viewMonth=new Date(selected.getFullYear(),selected.getMonth(),1);setHero(selected);renderCalendar();window.scrollTo({top:0,behavior:'smooth'});showToast('Guía del '+longDate(selected))}
+    function renderPlanner(){
+      var names=evaluateField(astro(now)).map(function(x){return x[0]}), pills=document.getElementById('actPills');
+      pills.innerHTML=names.map(function(n,i){return '<button type="button" class="act-pill'+(i===plannerIdx?' active':'')+'" data-i="'+i+'">'+n+'</button>'}).join('');
+      pills.querySelectorAll('.act-pill').forEach(function(b){b.onclick=function(){plannerIdx=+b.dataset.i;renderPlanner()}});
+      var base=new Date(now.getFullYear(),now.getMonth(),now.getDate()), next=null;
+      for(var k=0;k<62&&!next;k++){var dk=new Date(base.getTime()+k*DAY);if(plannerFav(plannerIdx,dk))next=dk}
+      document.getElementById('plannerNext').innerHTML=next?('Próximo día favorable para <b>'+names[plannerIdx]+'</b>: <b>'+(sameDay(next,base)?'hoy, '+longDate(next):longDate(next))+'</b>'):'Sin días favorables en los próximos dos meses';
+      var wd=['L','M','X','J','V','S','D'], wk='';
+      for(var j=0;j<7;j++){var dj=new Date(base.getTime()+j*DAY), okj=plannerFav(plannerIdx,dj);wk+='<button type="button" class="wk-day'+(okj?' ok':'')+(j===0?' today':'')+'" data-d="'+dj.getTime()+'"><span>'+wd[(dj.getDay()+6)%7]+'</span><b>'+dj.getDate()+'</b><i>'+(okj?'✓':'·')+'</i></button>'}
+      document.getElementById('plannerWeek').innerHTML=wk;
+      document.getElementById('plannerMonthTitle').textContent='Este mes · '+monthNames[base.getMonth()]+' '+base.getFullYear();
+      var y=base.getFullYear(), m=base.getMonth(), off=(new Date(y,m,1).getDay()+6)%7, days=new Date(y,m+1,0).getDate(), mg=wd.map(function(w){return '<span class="pm-h">'+w+'</span>'}).join('');
+      for(var b=0;b<off;b++)mg+='<span></span>';
+      for(var n=1;n<=days;n++){var dn=new Date(y,m,n), okm=plannerFav(plannerIdx,dn), past=dn<base;mg+='<button type="button" class="pm-day'+(okm?' ok':'')+(sameDay(dn,base)?' today':'')+(past?' past':'')+'" data-d="'+dn.getTime()+'">'+n+'</button>'}
+      document.getElementById('plannerMonth').innerHTML=mg;
+      document.querySelectorAll('#plannerSection [data-d]').forEach(function(el){el.onclick=function(){gotoDay(new Date(+el.dataset.d))}});
+    }
+    setHero(selected);renderCalendar();renderAnnual();renderPlanner();
   })();
   </script>
 <script>window.CL_ADS = { client: "", slotMid: "" };</script>
